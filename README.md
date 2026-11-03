@@ -97,3 +97,57 @@ No issues were detected by the implemented checks.
 - Compare metadata across formats.
 - Generate structured quality reports.
 - Evaluate multiple digitized objects.
+
+
+
+## Cross-Format Consistency Validation
+
+The project compares IIIF Presentation API 2 manifests with
+METS XML metadata to identify inconsistencies in digitized
+library collections.
+
+### Validation checks
+
+- IIIF Canvas count vs. METS physical page count
+- Canvas numbering and METS page order
+- METS physical page identifiers
+- Image identifier consistency between IIIF image resources
+  and METS DEFAULT file references
+
+### Results
+
+Tested with a publicly accessible digitized object from
+the Staatsbibliothek zu Berlin (PPN867445300):
+
+- IIIF Canvases: 426
+- METS physical pages: 426
+- Sequence inconsistencies: 0
+- Image identifier mismatches: 0
+
+### Run the validator
+
+Using the included synthetic test fixtures:
+
+```bash
+python3 src/check_cross_format.py \
+  tests/fixtures/iiif_valid.json \
+  tests/fixtures/mets_cross_valid.xml
+```
+
+### Automated tests
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+Current test suite: 4 tests covering valid and invalid
+METS references and IIIF/METS image identifiers.
+
+### Limitations
+
+- Image identifiers are compared using URL patterns.
+- Image contents and HTTP availability are not verified.
+- Full IIIF/METS schema validation is not implemented.
+- The synthetic METS fixtures are simplified and are
+  not intended as complete schema-valid METS documents.
+```

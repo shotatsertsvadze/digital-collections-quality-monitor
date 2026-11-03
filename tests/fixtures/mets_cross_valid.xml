@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets
+    xmlns:mets="http://www.loc.gov/METS/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <mets:fileSec>
+        <mets:fileGrp>
+            <mets:file ID="FILE_0001_DEFAULT" MIMETYPE="image/jpeg">
+                <mets:FLocat
+                    xlink:href="https://example.org/dc/PPN123456789-00000001/full/max/0/default.jpg"/>
+            </mets:file>
+        </mets:fileGrp>
+    </mets:fileSec>
+
+    <mets:structMap TYPE="PHYSICAL">
+        <mets:div ID="PHYS_SEQ" TYPE="physSequence">
+            <mets:div ID="PHYS_0001" TYPE="page" ORDER="1">
+                <mets:fptr FILEID="FILE_0001_DEFAULT"/>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+
+</mets:mets>

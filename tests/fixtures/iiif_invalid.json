@@ -1,0 +1,19 @@
+
+{
+  "sequences": [
+    {
+      "canvases": [
+        {
+          "@id": "https://example.org/dc/123456789-0001/canvas",
+          "images": [
+            {
+              "resource": {
+                "@id": "https://example.org/dc/123456789-9999/full/full/0/default.jpg"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
