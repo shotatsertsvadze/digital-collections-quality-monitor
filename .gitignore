@@ -1,0 +1,13 @@
+
+# Downloaded source data
+data/raw/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Python virtual environment
+.venv/
+
+# macOS
+.DS_Store
