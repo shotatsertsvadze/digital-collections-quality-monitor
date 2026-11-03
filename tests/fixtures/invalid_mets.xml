@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets
+    xmlns:mets="http://www.loc.gov/METS/"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <mets:dmdSec ID="DMDLOG_0001"/>
+
+    <mets:structMap TYPE="LOGICAL">
+        <mets:div
+            ID="LOG_0001"
+            TYPE="volume"
+            DMDID="DMDLOG_0001"/>
+    </mets:structMap>
+
+    <mets:structMap TYPE="PHYSICAL">
+        <mets:div ID="PHYS_SEQ" TYPE="physSequence">
+            <mets:div ID="PHYS_0001" TYPE="page"/>
+        </mets:div>
+    </mets:structMap>
+
+    <mets:structLink>
+        <mets:smLink
+            xlink:from="LOG_0001"
+            xlink:to="PHYS_9999"/>
+    </mets:structLink>
+
+</mets:mets>
