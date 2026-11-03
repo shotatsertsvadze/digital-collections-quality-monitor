@@ -151,3 +151,45 @@ METS references and IIIF/METS image identifiers.
 - The synthetic METS fixtures are simplified and are
   not intended as complete schema-valid METS documents.
 ```
+
+
+
+## OCR Quality Monitoring (ALTO XML)
+
+This module analyzes ALTO XML files from digitized
+library collections and generates a CSV quality report.
+
+### Features
+
+- Counts OCR text units, text lines, and illustrations
+- Flags pages with missing or very little OCR text
+- Generates a structured CSV report
+- Supports configurable input and output paths
+
+### Usage
+
+Run the OCR analyzer:
+
+    python3 src/check_ocr.py data/raw reports/ocr_quality_report.csv
+
+Run automated tests:
+
+    python3 -m unittest discover -s tests -v
+
+### Sample Results
+
+Four ALTO XML pages from Staatsbibliothek zu Berlin
+(PPN867445300) were analyzed.
+
+- Pages analyzed: 4
+- OCR text units: 580
+- Pages flagged for review: 3
+- Pages with text detected: 1
+
+### Limitations
+
+The module checks OCR text presence, not recognition
+accuracy. Pages with little text are flagged for manual
+review, not automatically classified as errors.
+
+The five-unit review threshold is experimental.

@@ -1,0 +1,5 @@
+file,words,text_lines,illustrations,status,reason
+page_0001_ocr.xml,3,1,21,REVIEW,Very little OCR text
+page_0002_ocr.xml,0,0,7,REVIEW,No OCR text
+page_0003_ocr.xml,0,0,6,REVIEW,No OCR text
+page_0020_ocr.xml,577,111,5,TEXT PRESENT,Text detected
