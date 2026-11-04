@@ -11,20 +11,52 @@ A learning-driven Python project focused on metadata quality assurance and digit
 - Explore OCR/HTR quality assurance.
 - Generate automated data quality reports.
 
-## Planned Technologies
 
-- Python
-- XML, JSON, CSV
-- OpenRefine
-- Catmandu
-- IIIF APIs
+## Technologies
+
+**Implemented in this project:**
+
+- Python 3 (standard library)
+- XML parsing with ElementTree
+- JSON and CSV processing
+- IIIF Presentation API 2
+- METS XML
+- ALTO XML for OCR data
+- Levenshtein edit distance for CER/WER
+- Automated testing with unittest
 - Git and GitHub
 
-## Current Status
+**Related learning topics:**
 
-🚧 Work in progress — initial project setup.
+- Dublin Core and MODS
+- OpenRefine
+- Catmandu
+- OCR/HTR workflows
 
-This project is being developed step by step as part of my professional development in library data management and digitization.
+
+
+## Project Status
+
+**Status: Functional MVP implemented and tested.**
+
+The project currently includes:
+
+- CSV metadata checks for missing titles and duplicate IDs
+- IIIF Canvas and image-reference checks
+- METS structural reference validation
+- Cross-format consistency checks between IIIF and METS
+- ALTO OCR text-presence analysis
+- CSV export of OCR quality indicators
+- OCR accuracy evaluation using CER and WER
+- Automated tests using synthetic fixtures
+
+The automated test suite has been verified in a fresh
+clone of the repository.
+
+This is an independent learning and portfolio project,
+not an official quality assurance system of the
+Staatsbibliothek zu Berlin.
+
 
 ## Learning Approach
 
@@ -82,21 +114,35 @@ Checked: November 2026
 
 No issues were detected by the implemented checks.
 
-## Current Limitations
 
-- Checks only the first image entry per canvas.
-- Does not verify whether image URLs are accessible.
-- Does not yet validate the complete IIIF specification.
-- Does not yet compare IIIF with METS/MODS or OCR metadata.
-- Results are based on one sample manifest.
+## Scope and Limitations
 
-## Next Steps
+- The IIIF checker examines selected structural properties,
+  not the complete IIIF specification.
+- The METS checker validates selected references,
+  not full METS schema compliance.
+- Cross-format checks compare identifiers and page order
+  using patterns observed in the sample object.
+- Image contents and HTTP availability are not verified.
+- OCR monitoring measures text presence, not recognition
+  accuracy.
+- CER/WER accuracy measurements require manually verified
+  Ground Truth.
+- Results are based on a limited sample of digitized material.
 
-- Improve IIIF validation and automated tests.
-- Analyze METS/MODS and ALTO XML metadata.
-- Compare metadata across formats.
-- Generate structured quality reports.
-- Evaluate multiple digitized objects.
+
+
+## Potential Future Improvements
+
+- Validate additional digitized objects and data formats.
+- Improve error handling for malformed or incomplete files.
+- Add broader automated test coverage.
+- Introduce more configurable validation rules.
+- Evaluate larger, manually verified OCR samples.
+- Add automated CI checks with GitHub Actions.
+
+These are possible extensions beyond the current MVP.
+
 
 
 
@@ -184,7 +230,8 @@ Four ALTO XML pages from Staatsbibliothek zu Berlin
 - Pages analyzed: 4
 - OCR text units: 580
 - Pages flagged for review: 3
-- Pages with text detected: 1
+- Pages containing OCR text: 2
+- Pages meeting experimental threshold (5 or more strings): 1
 
 ### Limitations
 
@@ -193,3 +240,55 @@ accuracy. Pages with little text are flagged for manual
 review, not automatically classified as errors.
 
 The five-unit review threshold is experimental.
+
+
+
+## OCR Accuracy Evaluation (CER / WER)
+
+The project includes an experimental Python-based
+OCR accuracy evaluator using Levenshtein edit distance.
+
+It calculates:
+
+- Character Error Rate (CER)
+- Word Error Rate (WER)
+
+### Verified Ground Truth Example
+
+Source: *Welt im Bild* (1918), digital page 20.  
+Identifier: PPN867445300.
+
+**Ground Truth (manually verified):**
+
+> Deutscher Fesselballon zur Beobachtung
+
+**OCR Output (ALTO XML):**
+
+> Deutscher Fesselballon jur Beobachtung
+
+**Results:**
+
+| Metric | Result |
+|---|---:|
+| Character errors | 1 |
+| Word errors | 1 |
+| CER | 2.63% |
+| WER | 25.00% |
+
+The results apply only to this four-word excerpt,
+not to the complete digitized page.
+
+### Run
+
+    python3 src/evaluate_ocr.py
+
+### Automated Testing
+
+    python3 -m unittest discover -s tests -v
+
+### Limitations
+
+- Accuracy evaluation requires verified Ground Truth.
+- No full-page OCR accuracy benchmark is provided.
+- The example is not a representative sample of the collection.
+- Text normalization policies are not yet implemented.
