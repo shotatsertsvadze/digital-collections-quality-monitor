@@ -1,9 +1,12 @@
+
 import csv
 import sys
 from pathlib import Path
 from collections import Counter
 import xml.etree.ElementTree as ET
 
+
+# 1. Input directory
 
 input_dir = (
     Path(sys.argv[1])
@@ -12,11 +15,14 @@ input_dir = (
 )
 
 ocr_files = sorted(input_dir.glob("page_*_ocr.xml"))
+
 if not ocr_files:
     raise SystemExit(
         f"No OCR XML files found in {input_dir}"
     )
 
+
+# 2. Analyze OCR files
 
 results = []
 
@@ -35,12 +41,16 @@ for path in ocr_files:
         and element.get("CONTENT")
     )
 
+    # Experimental review threshold
+
     if word_count == 0:
         status = "REVIEW"
         reason = "No OCR text"
+
     elif word_count < 5:
         status = "REVIEW"
         reason = "Very little OCR text"
+
     else:
         status = "TEXT PRESENT"
         reason = "Text detected"
@@ -54,6 +64,9 @@ for path in ocr_files:
         "reason": reason,
     })
 
+
+# 3. Print individual results
+
 print("\nOCR QUALITY REPORT")
 print("=" * 50)
 
@@ -65,20 +78,42 @@ for result in results:
     print(f"Status: {result['status']}")
     print(f"Reason: {result['reason']}")
 
+
+# 4. Calculate summary statistics
+
 review_count = sum(
     1 for result in results
     if result["status"] == "REVIEW"
 )
 
+pages_with_ocr_text = sum(
+    1 for result in results
+    if result["words"] > 0
+)
+
+pages_meeting_threshold = sum(
+    1 for result in results
+    if result["words"] >= 5
+)
+
+total_ocr_strings = sum(
+    result["words"] for result in results
+)
+
+
+# 5. Print summary
+
 print("\nSUMMARY")
 print("=" * 50)
+
 print("Pages analyzed:", len(results))
 print("Pages for review:", review_count)
-print("Pages with text:", len(results) - review_count)
-print("Total OCR strings:", sum(r["words"] for r in results))
+print("Pages containing OCR text:", pages_with_ocr_text)
+print("Pages meeting text threshold:", pages_meeting_threshold)
+print("Total OCR strings:", total_ocr_strings)
 
 
-# Export results to CSV
+# 6. Export results to CSV
 
 output_path = (
     Path(sys.argv[2])
@@ -86,7 +121,10 @@ output_path = (
     else Path("reports/ocr_quality_report.csv")
 )
 
-output_path.parent.mkdir(parents=True, exist_ok=True)
+output_path.parent.mkdir(
+    parents=True,
+    exist_ok=True
+)
 
 fieldnames = [
     "file",
@@ -97,8 +135,17 @@ fieldnames = [
     "reason",
 ]
 
-with output_path.open("w", newline="", encoding="utf-8") as csv_file:
-    writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+with output_path.open(
+    "w",
+    newline="",
+    encoding="utf-8"
+) as csv_file:
+
+    writer = csv.DictWriter(
+        csv_file,
+        fieldnames=fieldnames
+    )
+
     writer.writeheader()
     writer.writerows(results)
 
