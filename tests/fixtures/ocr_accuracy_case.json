@@ -1,0 +1,13 @@
+
+{
+  "source": "Welt im Bild (1918)",
+  "identifier": "PPN867445300",
+  "digital_page": 20,
+  "verification": "Manually checked against scanned page excerpt",
+  "ground_truth": "Deutscher Fesselballon zur Beobachtung",
+  "ocr_text": "Deutscher Fesselballon jur Beobachtung",
+  "expected_character_errors": 1,
+  "expected_word_errors": 1,
+  "expected_cer": 0.02631578947368421,
+  "expected_wer": 0.25
+}

@@ -12,6 +12,10 @@ input_dir = (
 )
 
 ocr_files = sorted(input_dir.glob("page_*_ocr.xml"))
+if not ocr_files:
+    raise SystemExit(
+        f"No OCR XML files found in {input_dir}"
+    )
 
 
 results = []

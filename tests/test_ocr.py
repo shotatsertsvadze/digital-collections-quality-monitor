@@ -64,6 +64,28 @@ class TestOCRValidator(unittest.TestCase):
         self.assertEqual(rows[0]["words"], "0")
         self.assertEqual(rows[0]["status"], "REVIEW")
 
+    
+    def test_empty_ocr_directory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "src/check_ocr.py",
+                    temp,
+                    str(Path(temp) / "report.csv"),
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(result.returncode, 1)
+            self.assertIn(
+                "No OCR XML files found",
+                result.stderr
+            )
+
+
 
 if __name__ == "__main__":
     unittest.main()
